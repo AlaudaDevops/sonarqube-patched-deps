@@ -1,0 +1,33 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Alauda Bot <alaudabot@alauda.io>
+Date: Thu, 22 Oct 2026 15:09:38 +0800
+Subject: [PATCH] Bump shaded Jackson to 2.22.4 / 3.2.3
+
+hazelcast 5.7.0 shades jackson-core / jackson-databind 2.21.2 and Jackson 3
+(tools.jackson) 3.1.2 under com.hazelcast.shaded, with the original
+pom.properties kept, so scanners report their CVEs (CVE-2026-54512,
+CVE-2026-54513, CVE-2026-68494, CVE-2026-68497, CVE-2026-89407,
+CVE-2026-89425, CVE-2026-91776, CVE-2026-91777 and related). Upstream
+master already uses these versions.
+---
+ hazelcast-parent/pom.xml | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/hazelcast-parent/pom.xml b/hazelcast-parent/pom.xml
+index a5fe40f..e304e76 100644
+--- a/hazelcast-parent/pom.xml
++++ b/hazelcast-parent/pom.xml
+@@ -100,9 +100,10 @@
+         <new.debezium.version>3.1.3.Final</new.debezium.version>
+         <grpc.version>1.73.0</grpc.version>
+         <hadoop.version>3.4.3</hadoop.version>
+-        <jackson.version>3.1.2</jackson.version>
+-        <jackson2.version>2.21.2</jackson2.version>
+-        <jackson.annotation.version>2.21</jackson.annotation.version>
++        <!-- Modified by Alauda on 2026-10-22: shaded Jackson 3.1.2 -> 3.2.3, 2.21.2 -> 2.22.4 (upstream master values). -->
++        <jackson.version>3.2.3</jackson.version>
++        <jackson2.version>2.22.4</jackson2.version>
++        <jackson.annotation.version>2.22</jackson.annotation.version>
+         <jline.version>3.30.9</jline.version>
+         <json-surfer.version>0.13</json-surfer.version>
+         <jsr107.api.version>1.1.1</jsr107.api.version> <!-- JCache -->

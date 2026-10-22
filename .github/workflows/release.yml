@@ -1,0 +1,35 @@
+name: Release patched dependency
+# Tag format: <component>/<version>, e.g. mybatis/3.5.19-alauda-1 or
+# hazelcast/5.7.0-alauda-1 (component = artifactId). The version must match components/<component>.env.
+on:
+  push:
+    tags: ['*/*']
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+      - name: Resolve component
+        id: tag
+        run: |
+          component=${GITHUB_REF_NAME%%/*}
+          version=${GITHUB_REF_NAME#*/}
+          source components/$component.env
+          [ "$VERSION" = "$version" ] || { echo "tag version $version != components/$component.env VERSION $VERSION"; exit 1; }
+          echo "component=$component" >> "$GITHUB_OUTPUT"
+      - name: Build
+        run: scripts/build.sh ${{ steps.tag.outputs.component }} dist
+      - name: Publish release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: ${{ github.ref_name }}
+          files: dist/*
+          fail_on_unmatched_files: true

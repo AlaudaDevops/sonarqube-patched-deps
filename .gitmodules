@@ -1,0 +1,6 @@
+[submodule "mybatis-3"]
+	path = mybatis-3
+	url = https://github.com/mybatis/mybatis-3.git
+[submodule "hazelcast"]
+	path = hazelcast
+	url = https://github.com/hazelcast/hazelcast.git
